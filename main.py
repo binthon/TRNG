@@ -1,19 +1,14 @@
 import RPi.GPIO as GPIO
-import time
 import spidev
+import time
+import numpy as np
 
 # Ustawienie trybu numeracji pinów na BCM (numeracja GPIO)
 GPIO.setmode(GPIO.BCM)
 
-# Ustawienie GPIO23 jako wyjście
-GPIO.setup(23, GPIO.OUT)
-
-# Ustawienie stanu wysokiego na GPIO23
-GPIO.output(23, GPIO.HIGH)
-
 # Inicjalizacja SPI
 spi = spidev.SpiDev()
-spi.open(0, 0)
+spi.open(0, 0)  # (bus, device)
 spi.max_speed_hz = 1350000
 
 # Funkcja do odczytu kanału z MCP3008
@@ -22,22 +17,40 @@ def read_channel(channel):
     data = ((adc[1] & 3) << 8) + adc[2]
     return data
 
-# Odczyt napięcia z kanału 0 (R1 podłączony do CH0 MCP3008) przez 10 sekund
+# Funkcja do przeliczania wartości ADC na napięcie
+def convert_to_voltage(adc_value):
+    return (adc_value * 3.3) / 1023  # 3.3V to napięcie referencyjne
+
+# Odczyt napięcia z kanału 0 (CH0 MCP3008) przez 10 sekund
 channel = 0
-for i in range(10):
+duration = 10  # czas w sekundach
+samples = []
+
+for i in range(duration):
     adc_value = read_channel(channel)
-    voltage = (adc_value * 3.3) / 1023  # Przeskalowanie wartości ADC do napięcia
-    print(f"Czas: {i + 1}s, Odczytana wartość ADC: {adc_value}, Napięcie na R1: {voltage:.2f} V")
+    voltage = convert_to_voltage(adc_value)
+    samples.append(voltage)
+    print(f"Czas: {i + 1}s, Odczytana wartość ADC: {adc_value}, Napięcie: {voltage:.6f} V")
     time.sleep(1)
-
-# Wyłączenie diody (ustawienie stanu niskiego na GPIO23)
-GPIO.output(23, GPIO.LOW)
-
-# Wyłączenie trybu pull-up na GPIO23 (jeśli jest ustawiony)
-GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
-
-# Czyszczenie ustawień GPIO
-GPIO.cleanup()
 
 # Zamknięcie SPI
 spi.close()
+# Czyszczenie ustawień GPIO
+GPIO.cleanup()
+
+# Obliczanie szumu cieplnego
+samples = np.array(samples)
+mean_voltage = np.mean(samples)
+rms_voltage = np.sqrt(np.mean(np.square(samples - mean_voltage)))
+
+print(f"Średnie napięcie: {mean_voltage:.6f} V")
+print(f"RMS napięcie: {rms_voltage:.6f} V")
+
+# Teoretyczne napięcie szumu cieplnego
+k_B = 1.38e-23  # Stała Boltzmanna w J/K
+T = 298  # Temperatura w kelwinach (przyjmując 25°C)
+R = 10e3  # Rezystancja w ohmach (10kΩ)
+delta_f = 0.5  # Szerokość pasma w Hz (przy odczytach co 1 sekundę pasmo Nyquista to 0.5 Hz)
+
+theoretical_rms_voltage = np.sqrt(4 * k_B * T * R * delta_f)
+print(f"Teoretyczne RMS napięcie szumu cieplnego: {theoretical_rms_voltage:.6f} V")
