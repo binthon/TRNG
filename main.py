@@ -1,56 +1,71 @@
-import RPi.GPIO as GPIO
 import spidev
 import time
-import numpy as np
-
-# Ustawienie trybu numeracji pinów na BCM (numeracja GPIO)
-GPIO.setmode(GPIO.BCM)
+import hashlib
+import matplotlib.pyplot as plt
+from collections import Counter
 
 # Inicjalizacja SPI
 spi = spidev.SpiDev()
-spi.open(0, 0)  # (bus, device)
+spi.open(0, 0)
 spi.max_speed_hz = 1350000
 
-# Funkcja do odczytu kanału z MCP3008
+# Funkcja do odczytu z MCP3008
 def read_channel(channel):
     adc = spi.xfer2([1, (8 + channel) << 4, 0])
     data = ((adc[1] & 3) << 8) + adc[2]
     return data
 
-# Funkcja do przeliczania wartości ADC na napięcie
-def convert_to_voltage(adc_value):
-    return (adc_value * 3.3) / 1023  # 3.3V to napięcie referencyjne
+# Funkcja do generowania losowej liczby na podstawie szumu cieplnego
+def generate_random_number(min_val, max_val):
+    samples = []
+    
+    # Pobierz 20 próbek z CH0
+    for _ in range(20):
+        value = read_channel(0)
+        samples.append(value)
+        time.sleep(0.01)  # Mała przerwa między próbkami
 
-# Odczyt napięcia z kanału 0 (CH0 MCP3008) przez 10 sekund
-channel = 0
-duration = 10  # czas w sekundach
-samples = []
+    # Suma próbek
+    total = sum(samples)
+    
+    # Użyj funkcji hashującej do dodatkowego mieszania danych
+    hash_object = hashlib.sha256(str(total).encode())
+    hash_hex = hash_object.hexdigest()
+    hash_int = int(hash_hex, 16)
+    
+    # Użyj zahashowanej wartości do generowania losowej liczby
+    random_value = hash_int % (max_val - min_val + 1) + min_val
+    
+    return random_value
 
-for i in range(duration):
-    adc_value = read_channel(channel)
-    voltage = convert_to_voltage(adc_value)
-    samples.append(voltage)
-    print(f"Czas: {i + 1}s, Odczytana wartość ADC: {adc_value}, Napięcie: {voltage:.6f} V")
-    time.sleep(1)
+try:
+    min_val = int(input("Podaj minimalną wartość: "))
+    max_val = int(input("Podaj maksymalną wartość: "))
+    num_samples = int(input("Podaj liczbę próbek: "))
+    
+    random_numbers = []
+    
+    for _ in range(num_samples):
+        random_number = generate_random_number(min_val, max_val)
+        random_numbers.append(random_number)
+        print(f"Losowa liczba: {random_number}")
+        time.sleep(0.5)  # Przerwa między generowaniem kolejnej liczby
+    
+    # Zliczanie liczby wystąpień każdej liczby
+    counter = Counter(random_numbers)
+    
+    # Tworzenie listy wszystkich możliwych wartości w zadanym zakresie
+    all_values = list(range(min_val, max_val + 1))
+    occurrences = [counter.get(i, 0) for i in all_values]
+    
+    # Wykres liczby wystąpień
+    plt.bar(all_values, occurrences)
+    plt.xlabel('Liczba')
+    plt.ylabel('Liczba wystąpień')
+    plt.title('Histogram losowych liczb')
+    plt.xticks(all_values, rotation=90)  # Ustawienie wszystkich wartości na osi X i ich obrót
+    plt.tight_layout()  # Automatyczne dopasowanie układu, aby uniknąć nachodzenia się etykiet
+    plt.show()
 
-# Zamknięcie SPI
-spi.close()
-# Czyszczenie ustawień GPIO
-GPIO.cleanup()
-
-# Obliczanie szumu cieplnego
-samples = np.array(samples)
-mean_voltage = np.mean(samples)
-rms_voltage = np.sqrt(np.mean(np.square(samples - mean_voltage)))
-
-print(f"Średnie napięcie: {mean_voltage:.6f} V")
-print(f"RMS napięcie: {rms_voltage:.6f} V")
-
-# Teoretyczne napięcie szumu cieplnego
-k_B = 1.38e-23  # Stała Boltzmanna w J/K
-T = 298  # Temperatura w kelwinach (przyjmując 25°C)
-R = 10e3  # Rezystancja w ohmach (10kΩ)
-delta_f = 0.5  # Szerokość pasma w Hz (przy odczytach co 1 sekundę pasmo Nyquista to 0.5 Hz)
-
-theoretical_rms_voltage = np.sqrt(4 * k_B * T * R * delta_f)
-print(f"Teoretyczne RMS napięcie szumu cieplnego: {theoretical_rms_voltage:.6f} V")
+except KeyboardInterrupt:
+    spi.close()
