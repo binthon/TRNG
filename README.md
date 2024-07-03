@@ -10,5 +10,7 @@ The results are presented in the form of a graph, where the x-axis is the number
 
 # Circuit 
 ![image](https://github.com/binthon/TRNG/assets/74725795/6c715d7b-7c5c-4fcf-8825-3ec49c6b5cc6)
+To connect in RP4 I connected
+![image](https://github.com/binthon/TRNG/assets/74725795/a994ea1c-8ef1-4d8f-99ec-a3f8a06331ae)
 
 
