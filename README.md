@@ -5,7 +5,7 @@ The goal is to use the mcp3008 a/c converter and to read random voltages from CH
 # TECHNOLOGY
 The program was written in python along with the libraries spidev (used to communicate with the SPI interface of the Raspberry PI 4), matplotlib, hashlib.
 # HOW PROGRAM WORKS
-The program reads the compactness every 0.01 seconds a hundred times by default. These values are converted to voltage, and every third sample is selected from these 100 samples. They are then summed. A sha256 hash function is used to improve randomness. In order to get a number in the specified range, I used the variable random_value where the modulo of the hash with the range is counted. 
+The program reads the compactness every 0.01 seconds a hundred times by default. These values are converted to voltage, and every third sample is selected from these 100 samples. They are then summed. A sha256 hash function is used to improve randomness. In order to get a number in the specified range, I used the variable random_value where the modulo of the hash with the range is counted. Use SHA256 hash is optional, result should be random without hashing.
 The results are presented in the form of a graph, where the x-axis is the numbers in the range, and the y-axis is the number of occurrences of a given number in the number of numbers you specify that you want to draw in the range.
 # RESULTS
 ![image](https://github.com/binthon/TRNG/assets/74725795/e9ab3959-d3f4-4ce6-aaae-5d5ed5d084b4)
@@ -31,3 +31,4 @@ Here is GPIO description
 Here is doc MCP3008
 [Data Sheet: MCP3008](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP3004-MCP3008-Data-Sheet-DS20001295.pdf)
 
+ # HOW USE
