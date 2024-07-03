@@ -19,9 +19,11 @@ To connect in RP4 I connected:
    b) MISO - GPIO 9
    c) MOSI - GPIO 10
    d) CSO - GPIO 8
+# DOC RP4
 Here is GPIO description
 ![image](https://github.com/binthon/TRNG/assets/74725795/a994ea1c-8ef1-4d8f-99ec-a3f8a06331ae)
-Here is doc mCP3008
 
+# DOC MCP3008
+Here is doc mCP3008
 [Data Sheet: MCP3008](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP3004-MCP3008-Data-Sheet-DS20001295.pdf)
 
