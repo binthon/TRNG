@@ -9,5 +9,6 @@ The program reads the compactness every 0.01 seconds a hundred times by default.
 The results are presented in the form of a graph, where the x-axis is the numbers in the range, and the y-axis is the number of occurrences of a given number in the number of numbers you specify that you want to draw in the range.
 
 # Circuit 
+![image](https://github.com/binthon/TRNG/assets/74725795/6c715d7b-7c5c-4fcf-8825-3ec49c6b5cc6)
 
 
