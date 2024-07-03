@@ -28,6 +28,6 @@ Here is GPIO description
 ![image](https://github.com/binthon/TRNG/assets/74725795/a994ea1c-8ef1-4d8f-99ec-a3f8a06331ae)
 
 # DOC MCP3008
-Here is doc mCP3008
+Here is doc MCP3008
 [Data Sheet: MCP3008](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP3004-MCP3008-Data-Sheet-DS20001295.pdf)
 
