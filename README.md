@@ -52,5 +52,3 @@ Here is GPIO description
 # DOC MCP3008
 Here is doc MCP3008
 [Data Sheet: MCP3008](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP3004-MCP3008-Data-Sheet-DS20001295.pdf)
-
- # HOW USE
