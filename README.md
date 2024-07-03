@@ -25,6 +25,10 @@ The results are presented in the form of a graph, where the x-axis is the number
    ```bash
     pip install matplotlib spidev 
     ```
+3. Lanuch app
+   ```bash
+    python main.py
+    ```
 # RESULTS
 ![image](https://github.com/binthon/TRNG/assets/74725795/e9ab3959-d3f4-4ce6-aaae-5d5ed5d084b4)
 ![image](https://github.com/binthon/TRNG/assets/74725795/b30ae7e5-39fd-489e-b2e0-1289362747f2)
