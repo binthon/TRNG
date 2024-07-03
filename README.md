@@ -12,7 +12,7 @@ The results are presented in the form of a graph, where the x-axis is the number
 ![image](https://github.com/binthon/TRNG/assets/74725795/6c715d7b-7c5c-4fcf-8825-3ec49c6b5cc6)
 To connect in RP4 I connected:
 1. Power:
-   a) Vcc - Gpio 1 (3,3V) 
+   a) Vcc - GPIO 1 (3,3V)
    b) GND - GPIO 6
 2. MCP:
    a) SCLK - GPIO 11
