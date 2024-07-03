@@ -3,7 +3,7 @@ import time
 import hashlib
 import matplotlib.pyplot as plt
 from collections import Counter
-
+import random
 # Inicjalizacja SPI
 spi = spidev.SpiDev()
 spi.open(0, 0)
@@ -33,7 +33,7 @@ def generate_random_number(min_val, max_val):
         time.sleep(0.01)  # Mała przerwa między próbkami
 
     # Losowo wybierz 40 próbek do dalszego przetwarzania
-    selected_samples = [samples[i] for i in sorted(random.sample(range(100), 40))]
+    selected_samples = samples[::3]
 
     # Suma wybranych próbek
     total = sum(selected_samples)
@@ -49,9 +49,9 @@ def generate_random_number(min_val, max_val):
     return samples, voltages, random_value
 
 try:
-    min_val = int(input("Podaj minimalną wartość: "))
-    max_val = int(input("Podaj maksymalną wartość: "))
-    num_samples = int(input("Podaj liczbę próbek: "))
+    min_val = int(input("Enter min range value: "))
+    max_val = int(input("Enter max range value: "))
+    num_samples = int(input("Enter number of samples: "))
     
     random_numbers = []
     all_samples = []
@@ -61,10 +61,9 @@ try:
         samples, voltages, random_number = generate_random_number(min_val, max_val)
         random_numbers.append(random_number)
         all_samples.append(samples)
-        all_voltages.append(voltages)
-        print(f"Próbki napięć (wartości ADC): {samples}")
-        print(f"Próbki napięć (V): {voltages}")
-        print(f"Losowa liczba: {random_number}")
+        all_voltages.append(voltages
+        print(f"Voltage of sample (V): {voltages}")
+        print(f"Random number: {random_number}")
         time.sleep(0.5)  # Przerwa między generowaniem kolejnej liczby
     
     # Zliczanie liczby wystąpień każdej liczby
@@ -76,9 +75,9 @@ try:
     
     # Wykres liczby wystąpień
     plt.bar(all_values, occurrences)
-    plt.xlabel('Liczba')
-    plt.ylabel('Liczba wystąpień')
-    plt.title('Histogram losowych liczb')
+    plt.xlabel('Number')
+    plt.ylabel('Number appearances')
+    plt.title('Histogram of the random numbers')
     plt.xticks(all_values, rotation=90)  # Ustawienie wszystkich wartości na osi X i ich obrót
     plt.tight_layout()  # Automatyczne dopasowanie układu, aby uniknąć nachodzenia się etykiet
     plt.show()
