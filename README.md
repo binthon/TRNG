@@ -1,1 +1,3 @@
 # TRGN
+
+# Project goal
