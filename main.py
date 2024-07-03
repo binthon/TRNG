@@ -36,7 +36,7 @@ def generate_random_number(min_val, max_val):
     # Użyj zahashowanej wartości do generowania losowej liczby
     random_value = hash_int % (max_val - min_val + 1) + min_val
     
-    return random_value
+    return samples, random_value
 
 try:
     min_val = int(input("Podaj minimalną wartość: "))
@@ -44,10 +44,13 @@ try:
     num_samples = int(input("Podaj liczbę próbek: "))
     
     random_numbers = []
+    all_samples = []
     
     for _ in range(num_samples):
-        random_number = generate_random_number(min_val, max_val)
+        samples, random_number = generate_random_number(min_val, max_val)
         random_numbers.append(random_number)
+        all_samples.append(samples)
+        print(f"Próbki napięć: {samples}")
         print(f"Losowa liczba: {random_number}")
         time.sleep(0.5)  # Przerwa między generowaniem kolejnej liczby
     
