@@ -24,16 +24,19 @@ def generate_random_number(min_val, max_val):
     samples = []
     voltages = []
     
-    # Pobierz 20 próbek z CH0
-    for _ in range(20):
+    # Pobierz 100 próbek z CH0
+    for _ in range(100):
         value = read_channel(0)
         voltage = convert_to_voltage(value)
         samples.append(value)
         voltages.append(voltage)
-        time.sleep(0.5)  # Mała przerwa między próbkami
+        time.sleep(0.01)  # Mała przerwa między próbkami
 
-    # Suma próbek
-    total = sum(samples)
+    # Losowo wybierz 40 próbek do dalszego przetwarzania
+    selected_samples = [samples[i] for i in sorted(random.sample(range(100), 40))]
+
+    # Suma wybranych próbek
+    total = sum(selected_samples)
     
     # Użyj funkcji hashującej do dodatkowego mieszania danych
     hash_object = hashlib.sha256(str(total).encode())
