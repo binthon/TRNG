@@ -7,6 +7,24 @@ The program was written in python along with the libraries spidev (used to commu
 # HOW PROGRAM WORKS
 The program reads the compactness every 0.01 seconds a hundred times by default. These values are converted to voltage, and every third sample is selected from these 100 samples. They are then summed. A sha256 hash function is used to improve randomness. In order to get a number in the specified range, I used the variable random_value where the modulo of the hash with the range is counted. Use SHA256 hash is optional, result should be random without hashing.
 The results are presented in the form of a graph, where the x-axis is the numbers in the range, and the y-axis is the number of occurrences of a given number in the number of numbers you specify that you want to draw in the range.
+# HOW TO USE
+1. Download the code from GitHub
+    ```bash
+    git@github.com:binthon/TRNG.git
+    ```
+2. Install dependencies
+   Can create virtual env to project
+   ```bash
+    python -m venv {namme}
+    ```
+   Then use it
+   ```bash
+   source {name}/bin/activate
+    ```
+   Install dependancies
+   ```bash
+    pip install matplotlib spidev 
+    ```
 # RESULTS
 ![image](https://github.com/binthon/TRNG/assets/74725795/e9ab3959-d3f4-4ce6-aaae-5d5ed5d084b4)
 ![image](https://github.com/binthon/TRNG/assets/74725795/b30ae7e5-39fd-489e-b2e0-1289362747f2)
