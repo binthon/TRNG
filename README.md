@@ -9,3 +9,5 @@ The program reads the compactness every 0.01 seconds a hundred times by default.
 The results are presented in the form of a graph, where the x-axis is the numbers in the range, and the y-axis is the number of occurrences of a given number in the number of numbers you specify that you want to draw in the range.
 
 # Circuit 
+
+
