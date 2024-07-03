@@ -23,7 +23,7 @@ def generate_random_number(min_val, max_val):
     for _ in range(20):
         value = read_channel(0)
         samples.append(value)
-        time.sleep(0.01)  # Mała przerwa między próbkami
+        time.sleep(0.5)  # Mała przerwa między próbkami
 
     # Suma próbek
     total = sum(samples)
