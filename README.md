@@ -13,11 +13,11 @@ The results are presented in the form of a graph, where the x-axis is the number
     git@github.com:binthon/TRNG.git
     ```
 2. Install dependencies
-   Can create virtual env to project
+   Can create virtual env to project (optional)
    ```bash
-    python -m venv {namme}
+    python -m venv {namme} 
     ```
-   Then use it
+   Then use it (optional)
    ```bash
    source {name}/bin/activate
     ```
