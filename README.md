@@ -21,6 +21,7 @@ To connect in RP4 I connected:
    d) CSO - GPIO 8
 # DOC RP4
 Here is GPIO description
+<br>
 ![image](https://github.com/binthon/TRNG/assets/74725795/a994ea1c-8ef1-4d8f-99ec-a3f8a06331ae)
 
 # DOC MCP3008
