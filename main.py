@@ -61,7 +61,7 @@ try:
         samples, voltages, random_number = generate_random_number(min_val, max_val)
         random_numbers.append(random_number)
         all_samples.append(samples)
-        all_voltages.append(voltages
+        all_voltages.append(voltages)
         print(f"Voltage of sample (V): {voltages}")
         print(f"Random number: {random_number}")
         time.sleep(0.5)  # Przerwa między generowaniem kolejnej liczby
