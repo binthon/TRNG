@@ -12,7 +12,7 @@ The results are presented in the form of a graph, where the x-axis is the number
 ![image](https://github.com/binthon/TRNG/assets/74725795/6c715d7b-7c5c-4fcf-8825-3ec49c6b5cc6)
 To connect in RP4 I connected:
 1. Power:
-   a) Vcc - Gpio 1 (3,3V
+   a) Vcc - Gpio 1 (3,3V) 
    b) GND - GPIO 6
 2. MCP:
    a) SCLK - GPIO 11
@@ -22,5 +22,6 @@ To connect in RP4 I connected:
 Here is GPIO description
 ![image](https://github.com/binthon/TRNG/assets/74725795/a994ea1c-8ef1-4d8f-99ec-a3f8a06331ae)
 Here is doc mCP3008
+
 [Data Sheet: MCP3008](https://ww1.microchip.com/downloads/aemDocuments/documents/MSLD/ProductDocuments/DataSheets/MCP3004-MCP3008-Data-Sheet-DS20001295.pdf)
 
