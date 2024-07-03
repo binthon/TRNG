@@ -15,14 +15,21 @@ def read_channel(channel):
     data = ((adc[1] & 3) << 8) + adc[2]
     return data
 
+# Funkcja do przeliczania wartości ADC na napięcie
+def convert_to_voltage(adc_value):
+    return (adc_value * 3.3) / 1023  # 3.3V to napięcie referencyjne
+
 # Funkcja do generowania losowej liczby na podstawie szumu cieplnego
 def generate_random_number(min_val, max_val):
     samples = []
+    voltages = []
     
     # Pobierz 20 próbek z CH0
     for _ in range(20):
         value = read_channel(0)
+        voltage = convert_to_voltage(value)
         samples.append(value)
+        voltages.append(voltage)
         time.sleep(0.5)  # Mała przerwa między próbkami
 
     # Suma próbek
@@ -36,7 +43,7 @@ def generate_random_number(min_val, max_val):
     # Użyj zahashowanej wartości do generowania losowej liczby
     random_value = hash_int % (max_val - min_val + 1) + min_val
     
-    return samples, random_value
+    return samples, voltages, random_value
 
 try:
     min_val = int(input("Podaj minimalną wartość: "))
@@ -45,12 +52,15 @@ try:
     
     random_numbers = []
     all_samples = []
+    all_voltages = []
     
     for _ in range(num_samples):
-        samples, random_number = generate_random_number(min_val, max_val)
+        samples, voltages, random_number = generate_random_number(min_val, max_val)
         random_numbers.append(random_number)
         all_samples.append(samples)
-        print(f"Próbki napięć: {samples}")
+        all_voltages.append(voltages)
+        print(f"Próbki napięć (wartości ADC): {samples}")
+        print(f"Próbki napięć (V): {voltages}")
         print(f"Losowa liczba: {random_number}")
         time.sleep(0.5)  # Przerwa między generowaniem kolejnej liczby
     
