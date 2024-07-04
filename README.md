@@ -7,6 +7,8 @@ The program was written in python along with the libraries spidev (used to commu
 # HOW PROGRAM WORKS
 The program reads the compactness every 0.01 seconds a hundred times by default. These values are converted to voltage, and every third sample is selected from these 100 samples. They are then summed. A sha256 hash function is used to improve randomness. In order to get a number in the specified range, I used the variable random_value where the modulo of the hash with the range is counted. Use SHA256 hash is optional, result should be random without hashing.
 The results are presented in the form of a graph, where the x-axis is the numbers in the range, and the y-axis is the number of occurrences of a given number in the number of numbers you specify that you want to draw in the range.
+
+An easier way might be to use the Adafruit_GPIO.SPI and Adafruit_MCP3008 libraries for input/output data from the MCP3008.
 # HOW TO USE
 1. Download the code from GitHub
     ```bash
