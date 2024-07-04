@@ -11,7 +11,7 @@ spi.max_speed_hz = 1350000
 
 # read data form spi
 def read_channel(channel):
-    adc = spi.xfer2([1, (8 + channel) << 4, 0])
+    adc = spi.xfer2([1, (8 + channel) << 4, 0]) 
     data = ((adc[1] & 3) << 8) + adc[2]
     return data
 
